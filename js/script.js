@@ -1,16 +1,4 @@
-/* =========================================================
-   Life Dashboard - script.js
-   Isi file:
-   1. Helper Local Storage
-   2. Tema terang/gelap        (Tantangan 1)
-   3. Jam, tanggal & salam     (+ Tantangan 2: nama custom)
-   4. Focus timer
-   5. To-do list               (+ Tantangan 3: cegah tugas duplikat)
-   6. Quick links
-   ========================================================= */
 
-/* ---------- 1. Helper Local Storage ---------- */
-// Membaca data dari Local Storage. Kalau kosong / rusak, pakai nilai cadangan.
 function loadData(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
@@ -20,7 +8,7 @@ function loadData(key, fallback) {
   }
 }
 
-// Menyimpan data ke Local Storage (diubah jadi teks JSON dulu).
+
 function saveData(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
@@ -29,7 +17,7 @@ function saveData(key, value) {
   }
 }
 
-/* ---------- 2. Tema terang / gelap ---------- */
+
 const themeToggle = document.getElementById("theme-toggle");
 
 function applyTheme(theme) {
@@ -46,7 +34,7 @@ themeToggle.addEventListener("click", function () {
 
 applyTheme(loadData("theme", "light"));
 
-/* ---------- 3. Jam, tanggal & salam ---------- */
+
 const clockEl = document.getElementById("clock");
 const dateEl = document.getElementById("date");
 const greetingEl = document.getElementById("greeting");
@@ -65,7 +53,7 @@ function getGreeting(hour) {
   return "Selamat malam";
 }
 
-// Emoji yang berubah sesuai waktu
+
 function getGreetingEmoji(hour) {
   if (hour >= 5 && hour < 11) return "🌅";
   if (hour >= 11 && hour < 15) return "☀️";
@@ -73,7 +61,7 @@ function getGreetingEmoji(hour) {
   return "🌙";
 }
 
-// Kutipan motivasi: dipilih berdasarkan hari, jadi berganti tiap hari
+
 const quotes = [
   "Mulai saja dulu, sempurnakan nanti.",
   "Langkah kecil setiap hari lebih baik daripada diam.",
@@ -113,7 +101,7 @@ function updateClock() {
 }
 
 nameForm.addEventListener("submit", function (event) {
-  event.preventDefault(); // cegah halaman reload
+  event.preventDefault(); 
   userName = nameInput.value.trim();
   saveData("userName", userName);
   updateClock();
@@ -122,7 +110,7 @@ nameForm.addEventListener("submit", function (event) {
 updateClock();
 setInterval(updateClock, 1000);
 
-/* ---------- 4. Focus timer ---------- */
+
 const timerDisplay = document.getElementById("timer-display");
 const timerMessage = document.getElementById("timer-message");
 const startBtn = document.getElementById("timer-start");
@@ -132,7 +120,7 @@ const timerForm = document.getElementById("timer-form");
 const timerMinutesInput = document.getElementById("timer-minutes");
 const timerStatus = document.getElementById("timer-status");
 const ringFg = document.getElementById("ring-fg");
-const RING_LENGTH = 2 * Math.PI * 52; // keliling lingkaran (r = 52)
+const RING_LENGTH = 2 * Math.PI * 52; 
 
 let timerMinutes = loadData("timerMinutes", 25);
 let secondsLeft = timerMinutes * 60;
@@ -145,7 +133,7 @@ function renderTimer() {
   const seconds = String(secondsLeft % 60).padStart(2, "0");
   timerDisplay.textContent = minutes + ":" + seconds;
 
-  // Lingkaran progres: penuh di awal, habis di akhir
+  
   const totalSeconds = timerMinutes * 60;
   const fractionLeft = totalSeconds > 0 ? secondsLeft / totalSeconds : 0;
   ringFg.style.strokeDashoffset = RING_LENGTH * (1 - fractionLeft);
@@ -161,7 +149,7 @@ function stopTimer() {
 }
 
 function startTimer() {
-  if (timerId !== null || secondsLeft <= 0) return; // sudah jalan / sudah habis
+  if (timerId !== null || secondsLeft <= 0) return; 
   timerMessage.textContent = "";
   timerStatus.textContent = "Sedang fokus 🔥";
   timerId = setInterval(function () {
@@ -187,7 +175,7 @@ startBtn.addEventListener("click", startTimer);
 stopBtn.addEventListener("click", stopTimer);
 resetBtn.addEventListener("click", resetTimer);
 
-// Mengubah durasi timer (Pomodoro custom)
+
 timerForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const value = parseInt(timerMinutesInput.value, 10);
@@ -202,7 +190,7 @@ timerForm.addEventListener("submit", function (event) {
 
 renderTimer();
 
-/* ---------- 5. To-do list ---------- */
+
 const todoForm = document.getElementById("todo-form");
 const todoInput = document.getElementById("todo-input");
 const todoList = document.getElementById("todo-list");
@@ -211,12 +199,11 @@ const todoEmpty = document.getElementById("todo-empty");
 const progressText = document.getElementById("progress-text");
 const progressFill = document.getElementById("progress-fill");
 
-// Setiap tugas: { id, text, done }
-let todos = loadData("todos", []);
-let editingId = null; // id tugas yang sedang diedit (null = tidak ada)
 
-// Cek apakah teks sudah ada (tanpa peduli huruf besar/kecil).
-// excludeId dipakai saat edit supaya tugas tidak dianggap duplikat dirinya sendiri.
+let todos = loadData("todos", []);
+let editingId = null; 
+
+
 function isDuplicate(text, excludeId) {
   const target = text.trim().toLowerCase();
   return todos.some(function (todo) {
@@ -228,7 +215,7 @@ function renderTodos() {
   todoList.innerHTML = "";
   todoEmpty.style.display = todos.length === 0 ? "block" : "none";
 
-  // Bar progres: berapa tugas yang sudah selesai
+  
   const doneCount = todos.filter(function (item) { return item.done; }).length;
   const percent = todos.length === 0 ? 0 : Math.round((doneCount / todos.length) * 100);
   progressText.textContent = doneCount + " dari " + todos.length + " selesai (" + percent + "%)";
@@ -238,7 +225,7 @@ function renderTodos() {
     const li = document.createElement("li");
     li.className = "todo-item" + (todo.done ? " done" : "");
 
-    // Checkbox selesai
+    
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = todo.done;
@@ -251,7 +238,7 @@ function renderTodos() {
     li.appendChild(checkbox);
 
     if (editingId === todo.id) {
-      // Mode edit: tampilkan kolom input + tombol Simpan / Batal
+      
       const editInput = document.createElement("input");
       editInput.type = "text";
       editInput.className = "todo-edit-input";
@@ -292,17 +279,17 @@ function renderTodos() {
       });
       li.appendChild(cancelBtn);
 
-      // Enter = simpan, Escape = batal
+      
       editInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") saveBtn.click();
         if (event.key === "Escape") cancelBtn.click();
       });
       setTimeout(function () { editInput.focus(); }, 0);
     } else {
-      // Mode biasa: teks + tombol Edit & Hapus
+      
       const span = document.createElement("span");
       span.className = "todo-text";
-      span.textContent = todo.text; // textContent = aman dari kode HTML jahat
+      span.textContent = todo.text; 
       li.appendChild(span);
 
       const editBtn = document.createElement("button");
@@ -354,21 +341,21 @@ todoForm.addEventListener("submit", function (event) {
 
 renderTodos();
 
-/* ---------- 6. Quick links ---------- */
+
 const linkForm = document.getElementById("link-form");
 const linkNameInput = document.getElementById("link-name");
 const linkUrlInput = document.getElementById("link-url");
 const linkList = document.getElementById("link-list");
 const linkMessage = document.getElementById("link-message");
 
-// Setiap link: { id, name, url }
+
 let links = loadData("links", [
   { id: 1, name: "Google", url: "https://www.google.com" },
   { id: 2, name: "YouTube", url: "https://www.youtube.com" },
   { id: 3, name: "GitHub", url: "https://github.com" },
 ]);
 
-// Menambahkan https:// kalau pengguna lupa mengetiknya.
+
 function normalizeUrl(value) {
   const url = value.trim();
   return /^https?:\/\//i.test(url) ? url : "https://" + url;
@@ -386,7 +373,7 @@ function renderLinks() {
     anchor.target = "_blank";
     anchor.rel = "noopener noreferrer";
 
-    // Ikon website (diambil otomatis; disembunyikan kalau gagal dimuat)
+    
     const icon = document.createElement("img");
     icon.className = "link-icon";
     icon.alt = "";
@@ -424,7 +411,7 @@ linkForm.addEventListener("submit", function (event) {
 
   const url = normalizeUrl(rawUrl);
   try {
-    new URL(url); // lempar error kalau format URL salah
+    new URL(url); 
   } catch (error) {
     linkMessage.textContent = "Alamat website tidak valid.";
     return;
