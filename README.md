@@ -13,7 +13,7 @@ Dibuat dengan HTML, CSS, dan JavaScript murni. Data disimpan di Local Storage br
 1. Mode terang / gelap
 2. Nama custom di salam
 3. Cegah tugas duplikat
-4. (Bonus) Durasi timer bisa diubah
+4. (Tambahan) Durasi timer bisa diubah
 
 ## Struktur folder
 ```
