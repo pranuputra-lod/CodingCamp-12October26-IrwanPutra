@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Hiasan latar belakang -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <div class="container">
+
+    <!-- ===== HEADER: salam, jam, tanggal, tombol tema ===== -->
+    <header class="card hero">
+      <div class="hero-top">
+        <p class="date" id="date"></p>
+        <button id="theme-toggle" class="theme-btn" type="button" aria-label="Ganti mode terang/gelap">🌙</button>
+      </div>
+      <div class="hero-emoji" id="greeting-emoji">👋</div>
+      <p class="clock" id="clock">00:00:00</p>
+      <h1 class="greeting" id="greeting">Halo!</h1>
+      <p class="quote" id="quote"></p>
+
+      <form id="name-form" class="inline-form center">
+        <label for="name-input" class="sr-only">Nama kamu</label>
+        <input type="text" id="name-input" placeholder="Siapa namamu?" maxlength="30" autocomplete="off">
+        <button type="submit" class="btn">Simpan Nama</button>
+      </form>
+    </header>
+
+    <main class="grid">
+
+      <!-- ===== FOCUS TIMER ===== -->
+      <section class="card" aria-labelledby="timer-title">
+        <h2 id="timer-title"><span class="h-icon">⏱️</span> Focus Timer</h2>
+
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52"></circle>
+          </svg>
+          <div class="ring-text">
+            <p class="timer" id="timer-display">25:00</p>
+            <p class="timer-status" id="timer-status">Siap fokus</p>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="timer-start" class="btn" type="button">▶ Start</button>
+          <button id="timer-stop" class="btn btn-secondary" type="button">⏸ Stop</button>
+          <button id="timer-reset" class="btn btn-secondary" type="button">↺ Reset</button>
+        </div>
+
+        <form id="timer-form" class="inline-form center">
+          <label for="timer-minutes" class="sr-only">Durasi dalam menit</label>
+          <input type="number" id="timer-minutes" min="1" max="120" value="25">
+          <button type="submit" class="btn btn-secondary">Atur Menit</button>
+        </form>
+        <p class="hint center" id="timer-message" aria-live="polite"></p>
+      </section>
+
+      <!-- ===== TO-DO LIST ===== -->
+      <section class="card" aria-labelledby="todo-title">
+        <h2 id="todo-title"><span class="h-icon">✅</span> To-Do List</h2>
+
+        <div class="progress-head">
+          <span id="progress-text">0 dari 0 selesai</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+        <form id="todo-form" class="inline-form">
+          <label for="todo-input" class="sr-only">Tugas baru</label>
+          <input type="text" id="todo-input" placeholder="Tambah tugas baru..." maxlength="100" autocomplete="off">
+          <button type="submit" class="btn">Tambah</button>
+        </form>
+        <p class="hint error" id="todo-message" aria-live="polite"></p>
+        <ul id="todo-list" class="todo-list"></ul>
+        <div class="empty" id="todo-empty">
+          <div class="empty-emoji">📝</div>
+          <p>Belum ada tugas. Yuk tambah satu!</p>
+        </div>
+      </section>
+
+      <!-- ===== QUICK LINKS ===== -->
+      <section class="card full" aria-labelledby="links-title">
+        <h2 id="links-title"><span class="h-icon">🔗</span> Quick Links</h2>
+        <form id="link-form" class="inline-form">
+          <label for="link-name" class="sr-only">Nama link</label>
+          <input type="text" id="link-name" placeholder="Nama (mis. YouTube)" maxlength="20" autocomplete="off">
+          <label for="link-url" class="sr-only">Alamat website</label>
+          <input type="text" id="link-url" placeholder="Alamat (mis. youtube.com)" autocomplete="off">
+          <button type="submit" class="btn">Tambah Link</button>
+        </form>
+        <p class="hint error" id="link-message" aria-live="polite"></p>
+        <div id="link-list" class="link-list"></div>
+      </section>
+
+    </main>
+
+    <footer class="footer">Dibuat dengan HTML, CSS &amp; JavaScript ✨</footer>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
